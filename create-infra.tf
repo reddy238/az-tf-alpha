@@ -7,12 +7,12 @@ resource "azurerm_virtual_network" "alpha" {
   name                = "alpha-network"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.alpha.location
-  resource_group_name = azurerm_resource_group.alpha.resource_group_name
+  resource_group_name = azurerm_resource_group.alpha.name
 }
 
 resource "azurerm_subnet" "alpha" {
   name                 = "webapp-subnet"
-  resource_group_name  = azurerm_resource_group.alpha.resource_group_name
+  resource_group_name = azurerm_resource_group.alpha.name
   virtual_network_name = azurerm_virtual_network.alpha.name
   address_prefixes     = ["10.0.2.0/24"]
 }
@@ -20,7 +20,7 @@ resource "azurerm_subnet" "alpha" {
 resource "azurerm_network_interface" "alpha" {
   name                = "alpha-nic"
   location            = azurerm_resource_group.alpha.location
-  resource_group_name = azurerm_resource_group.alpha.resource_group_name
+  resource_group_name = azurerm_resource_group.alpha.name
 
   ip_configuration {
     name                          = "internal"
@@ -31,7 +31,7 @@ resource "azurerm_network_interface" "alpha" {
 
 resource "azurerm_linux_virtual_machine" "alpha" {
   name                = "alpha-machine"
-  resource_group_name = azurerm_resource_group.alpha.resource_group_name
+  resource_group_name = azurerm_resource_group.alpha.name
   location            = azurerm_resource_group.alpha.location
   size                = "Standard_F2"
   admin_username      = "azureuser"
